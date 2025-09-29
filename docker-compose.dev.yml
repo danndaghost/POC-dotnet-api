@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  helloworld-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: helloworld-api-dev
+    restart: unless-stopped
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - TZ=America/Santiago
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - helloworld-dev-network
+
+networks:
+  helloworld-dev-network:
+    driver: bridge
+    name: helloworld-dev-network
